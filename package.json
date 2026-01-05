@@ -1,0 +1,62 @@
+{
+  "name": "@perkos/middleware-x402",
+  "version": "1.0.0",
+  "description": "x402 v2 payment protocol middleware and utilities for vendor services",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "x402",
+    "payment",
+    "middleware",
+    "usdc",
+    "eip-712",
+    "blockchain",
+    "perkos"
+  ],
+  "author": "PerkOS",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PerkOS-xyz/pkg-middleware-x402.git"
+  },
+  "dependencies": {
+    "viem": "^2.0.0"
+  },
+  "peerDependencies": {
+    "next": ">=14.0.0"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "next": "^14.0.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

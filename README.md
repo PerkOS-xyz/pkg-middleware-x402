@@ -1,15 +1,15 @@
-# @perkos/x402-core
+# @perkos/middleware-x402
 
 x402 v2 payment protocol middleware and utilities for building vendor services with micropayments.
 
 ## Installation
 
 ```bash
-npm install @perkos/x402-core
+npm install @perkos/middleware-x402
 # or
-pnpm add @perkos/x402-core
+pnpm add @perkos/middleware-x402
 # or
-yarn add @perkos/x402-core
+yarn add @perkos/middleware-x402
 ```
 
 ## Features
@@ -26,7 +26,7 @@ yarn add @perkos/x402-core
 
 ```typescript
 import { NextRequest, NextResponse } from "next/server";
-import { verifyX402PaymentNext, type PaymentConfig, type PaymentRoutes } from "@perkos/x402-core";
+import { verifyX402PaymentNext, type PaymentConfig, type PaymentRoutes } from "@perkos/middleware-x402";
 
 // Configure your payment settings
 const config: PaymentConfig = {
@@ -76,7 +76,7 @@ import {
   parsePriceToUSDC,
   generateNonce,
   createEIP712Domain,
-} from "@perkos/x402-core";
+} from "@perkos/middleware-x402";
 
 // Get USDC address for a network
 const usdcAddress = getUSDCAddress("avalanche");

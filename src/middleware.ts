@@ -142,14 +142,14 @@ export async function verifyPayment(
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+      const errorData = await response.json().catch(() => ({})) as { invalidReason?: string };
       return {
         isValid: false,
         invalidReason: errorData.invalidReason || `Verification failed: ${response.statusText}`,
       };
     }
 
-    const result = await response.json();
+    const result = await response.json() as { isValid?: boolean; payer?: string; invalidReason?: string };
     return {
       isValid: result.isValid || false,
       payer: result.payer,
@@ -214,14 +214,22 @@ export async function settlePayment(
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+      const errorData = await response.json().catch(() => ({})) as { errorReason?: string; error?: string };
       return {
         success: false,
         error: errorData.errorReason || errorData.error || `Settlement failed: ${response.statusText}`,
       };
     }
 
-    const result = await response.json();
+    const result = await response.json() as {
+      success?: boolean;
+      errorReason?: string;
+      error?: string;
+      transaction?: string | { hash?: string; transactionHash?: string };
+      receipt?: { settlement?: { transaction?: string } };
+      transactionHash?: string;
+      hash?: string;
+    };
 
     if (!result.success) {
       return {
@@ -233,8 +241,8 @@ export async function settlePayment(
     // Extract transaction hash from various response formats
     const transactionHash =
       (typeof result.transaction === "string" ? result.transaction : undefined) ||
-      result.transaction?.hash ||
-      result.transaction?.transactionHash ||
+      (typeof result.transaction === "object" ? result.transaction?.hash : undefined) ||
+      (typeof result.transaction === "object" ? result.transaction?.transactionHash : undefined) ||
       result.receipt?.settlement?.transaction ||
       result.transactionHash ||
       result.hash ||

@@ -12,6 +12,8 @@ import {
   NETWORK_TO_CAIP2,
   CAIP2_TO_NETWORK,
   DEFAULT_RPC_URLS,
+  getDomainVersion,
+  getTokenName,
 } from "./constants";
 
 /**
@@ -100,18 +102,24 @@ export function generateNonce(): `0x${string}` {
 
 /**
  * Create EIP-712 domain for token transferWithAuthorization
+ * Uses network-specific version and token name
+ * - Version: All Circle native USDC uses "2" (verified on-chain)
+ * - Token name: Celo uses "USDC", others use "USD Coin"
  */
 export function createEIP712Domain(
   network: string,
   tokenAddress?: Address,
-  tokenName?: string
+  tokenName?: string,
+  version?: string
 ) {
   const address = tokenAddress || getUSDCAddress(network);
-  const name = tokenName || "USD Coin";
+  // Use network-specific token name (Celo = "USDC", others = "USD Coin")
+  const name = tokenName || getTokenName(network);
+  const domainVersion = version || getDomainVersion(network);
 
   return {
     name,
-    version: "2",
+    version: domainVersion,
     chainId: getChainId(network),
     verifyingContract: address,
   };

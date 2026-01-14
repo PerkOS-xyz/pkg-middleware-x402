@@ -79,12 +79,14 @@ export type NetworkName =
   | "avalanche"
   | "avalanche-fuji"
   | "celo"
-  | "celo-sepolia";
+  | "celo-sepolia"
+  | "ethereum";
 
 /**
  * CAIP-2 network identifier
  */
 export type CAIP2Network =
+  | "eip155:1"
   | "eip155:8453"
   | "eip155:84532"
   | "eip155:43114"
